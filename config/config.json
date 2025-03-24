@@ -1,0 +1,84 @@
+{
+  "hand": {
+    "__comment": "base to tip",
+    "num_of_fingers": 5,
+    "finger_1": {
+      "ids": [11, 12, 13, 14, 15]
+    },
+    "finger_2": {
+      "ids": [21, 22, 23, 24, 25]
+    },
+    "finger_3": {
+      "ids": [31, 32, 33, 34, 35]
+    },
+    "finger_4": {
+      "ids": [41, 42, 43, 44, 45]
+    },
+    "finger_5": {
+      "ids": [51, 52, 53, 54, 55]
+    }
+  },
+
+  "communication": {
+    "__comment": "WINDOWS: COM*, LINUX: /dev/ttyUSB*",
+    "port": "/dev/ttyUSB0",
+    "baudrate": 57600,
+    "protocol_version": 2.0
+  },
+
+  "__comment": "global motor setting.",
+  "motor_config": {
+    "series": "X_SERIES",
+    "X_SERIES": {
+      "addr_torque_enable": 64,
+      "addr_goal_position": 116,
+      "len_goal_position": 4,
+      "addr_present_position": 132,
+      "len_present_position": 4,
+      "dxl_minimum_position_value": 0,
+      "dxl_maximum_position_value": 4095
+    },
+    "MX_SERIES": {
+      "addr_torque_enable": 64,
+      "addr_goal_position": 116,
+      "len_goal_position": 4,
+      "addr_present_position": 132,
+      "len_present_position": 4,
+      "dxl_minimum_position_value": 0,
+      "dxl_maximum_position_value": 4095
+    },
+    "PRO_SERIES": {
+        "addr_torque_enable": 562,
+        "addr_goal_position": 596,
+        "len_goal_position": 4,
+        "addr_present_position": 611,
+        "len_present_position": 4,
+        "dxl_minimum_position_value": -150000,
+        "dxl_maximum_position_value": 150000
+    },
+    "P_SERIES": {
+        "addr_torque_enable": 512,
+        "addr_goal_position": 564,
+        "len_goal_position": 4,
+        "addr_present_position": 580,
+        "len_present_position": 4,
+        "dxl_minimum_position_value": -150000,
+        "dxl_maximum_position_value": 150000
+    },
+    "PRO_A_SERIES": {
+      "addr_torque_enable": 512,
+      "addr_goal_position": 564,
+      "len_goal_position": 4,
+      "addr_present_position": 580,
+      "len_present_position": 4,
+      "dxl_minimum_position_value": -150000,
+      "dxl_maximum_position_value": 150000
+    },
+    "__comment": "check the operating mode from control_table",
+    "operating_mode": 5,
+    "torque_enable": 1,
+    "torque_disable": 0,
+    "max_position_limit": 4095,
+    "min_position_limit": 0
+  }
+}
