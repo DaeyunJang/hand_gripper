@@ -1,6 +1,8 @@
 # hand_gripper
-hand gripper project using DYNAMIXEL
+Custom hand gripper project using DYNAMIXEL
 
+## Introduction
+{TBD} Now researching...
 
 ## Pre-requisition
 ### Dynamixel SDK
