@@ -1,6 +1,16 @@
 {
     "__comment": "https://emanual.robotis.com/docs/en/dxl/x/xl330-m077/#control-table-description",
     "BROADCAST_ID": 254,
+    "BAUDRATE_MAP": {
+        "__comment": "Mapping from baudrate value to motor register code.",
+        "9600": 0,
+        "57600": 1,
+        "115200": 2,
+        "1000000": 3,
+        "2000000": 4,
+        "3000000": 5,
+        "4000000": 6
+    },
     "OPERATING_MODE": {
         "current": 0,
         "velocity": 1,

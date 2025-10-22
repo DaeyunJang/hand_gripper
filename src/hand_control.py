@@ -22,8 +22,14 @@ import json
 import time
 import threading
 import sys
+import ctypes
 
-from dynamixel_sdk import *                    # Uses Dynamixel SDK library
+from dynamixel_sdk import *
+
+# from dynamixel_sdk import (
+#     PortHandler, PacketHandler, GroupSyncWrite, GroupSyncRead,
+#     COMM_SUCCESS, DXL_LOBYTE, DXL_LOWORD, DXL_HIBYTE, DXL_HIWORD
+# )
 
 # Read definitions from .json
 config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../config/config.json")
@@ -46,7 +52,7 @@ class DynamixelController:
         note
         load configuration from json file.
         """
-        self.lock = threading.Lock()
+        self.lock = threading.RLock()
 
         self.portHandler = PortHandler(config["communication"]["port"])
         self.packetHandler = PacketHandler(config["communication"]["protocol_version"])
@@ -75,18 +81,38 @@ class DynamixelController:
             # getch()
             quit()
             
-        # Set port baudrate
+        # Set port initial baudrate for connection
         if self.portHandler.setBaudRate(config["communication"]["baudrate"]):
-            print("Succeeded to change the baudrate")
+            print(f"Succeeded to change the baudrate to {config['communication']['baudrate']} for initial connection")
         else:
             print("Failed to change the baudrate")
             print("Press any key to terminate...")
             # getch()
             quit()
 
+        # Change baudrate of motors to target baudrate
+        self.set_baudrate()
+
+        # set initial states
+        print(f"============================")
+        print(f"Set operation mode")
         for motor_id in self.motor_ids:
             self.set_op_mode(motor_id=motor_id, mode=self.operation_mode)
+            
+        print(f"==========================================")
+        print(f"Set motor details from config.json")
+        for motor_id in self.motor_ids:
+            self.set_motor_details(motor_id)
+        
+        print(f"==========================================")
+        print(f"Logs...")
+        for motor_id in self.motor_ids:
+            self.log_motor_status(motor_id)
 
+        # Regist Parameter
+        print(f"==========================================")
+        print(f"Registry parameters")
+        for motor_id in self.motor_ids:
             dxl_addparam_result = self.groupSyncReadPosition.addParam(motor_id)
             if dxl_addparam_result == True:
                 print("[ID:%03d] groupSyncReadPosition addparam succeed" % motor_id)
@@ -106,11 +132,178 @@ class DynamixelController:
                 print("[ID:%03d] groupSyncReadCurrent addparam failed" % motor_id)
                 quit()
 
+        print(f"==========================================")
+        # print(f"Starting with 'torque off'")
+        # self.disable_torque_all()
+        print(f"Starting with 'torque on'")
+        self.enable_torque_all()
+
+        print(f"Threading start")
         # flag for threading
         self.running = True
-        self.enable_torque_all()
-        self.read_state_thread = threading.Thread(target=self.read_states_loop, daemon=True)
-        self.read_state_thread.start()
+        # self.read_state_thread = threading.Thread(target=self.read_states_loop, daemon=True)
+        # self.read_state_thread.start()
+
+    def log_motor_status(self, motor_id: int):
+        with self.lock:
+            
+            # Read Operating Mode
+            op_mode, dxl_comm_result, dxl_error = self.packetHandler.read1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_OPERATING_MODE"])
+            if dxl_comm_result == COMM_SUCCESS:
+                pass
+            else:
+                print(f"  Failed to read Operating Mode: {self.packetHandler.getTxRxResult(dxl_comm_result)}")
+
+            # Read Drive Mode
+            drive_mode, dxl_comm_result, dxl_error = self.packetHandler.read1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_DRIVE_MODE"])
+            if dxl_comm_result == COMM_SUCCESS:
+                pass
+            else:
+                print(f"  Failed to read Drive Mode: {self.packetHandler.getTxRxResult(dxl_comm_result)}")
+
+            # Read Homing Offset
+            homing_offset_unsigned, dxl_comm_result, dxl_error = self.packetHandler.read4ByteTxRx(self.portHandler, motor_id, control_table["ADDR_HOMING_OFFSET"])
+            if dxl_comm_result == COMM_SUCCESS:
+                homing_offset_signed = ctypes.c_int32(homing_offset_unsigned).value
+                pass
+            else:
+                print(f"  Failed to read Homing Offset: {self.packetHandler.getTxRxResult(dxl_comm_result)}")
+
+            # Read Current Limit
+            current_limit, dxl_comm_result, dxl_error = self.packetHandler.read2ByteTxRx(self.portHandler, motor_id, control_table["ADDR_CURRENT_LIMIT"])
+            if dxl_comm_result == COMM_SUCCESS:
+                pass
+            else:
+                print(f"  Failed to read Current Limit: {self.packetHandler.getTxRxResult(dxl_comm_result)}")
+
+
+            print(f"Motor ID: {motor_id:<4} | Operating Mode: {op_mode:2d} | Drive Mode: {drive_mode:2d} | Homing Offset: {homing_offset_signed:+4d} | Current Limit: {current_limit:+4d} |")
+            # print(f"==========================================")
+
+
+    def set_motor_details(self, motor_id: int):
+        motor_id_str = str(motor_id)
+        if motor_id_str in config["motor_details"]:
+            details = config["motor_details"][motor_id_str]
+
+            # Set Drive Mode
+            if "drive_mode" in details:
+                drive_mode_str = details["drive_mode"]
+                drive_mode = int(drive_mode_str, 16)
+                dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_DRIVE_MODE"], drive_mode)
+                if dxl_comm_result != COMM_SUCCESS:
+                    print(f"%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+                elif dxl_error != 0:
+                    print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
+                else:
+                    print(f"Dynamixel#{motor_id} has been set drive mode to {drive_mode_str}")
+                    pass
+            
+            # Set Current Limit
+            current_limit = details["current_limit"]
+            dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, motor_id, control_table["ADDR_CURRENT_LIMIT"], current_limit)
+            if dxl_comm_result != COMM_SUCCESS:
+                print(f"%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+            elif dxl_error != 0:
+                print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
+            else:
+                print(f"Dynamixel#{motor_id} has been set current limit to {current_limit}")
+                pass
+
+            # Set Homing Offset
+            homing_offset = details["homing_offset"]
+            dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, motor_id, control_table["ADDR_HOMING_OFFSET"], homing_offset)
+            if dxl_comm_result != COMM_SUCCESS:
+                print(f"%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+                print(f"motor_id: {motor_id} / homing_offset: {homing_offset}")
+            elif dxl_error != 0:
+                print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
+            else:
+                print(f"Dynamixel#{motor_id} has been set homing offset to {homing_offset}")
+                pass
+
+            # Set Max Position
+            if "max_position" in details:
+                max_position = details["max_position"]
+                dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, motor_id, control_table["ADDR_MAX_POSITION"], max_position)
+                if dxl_comm_result != COMM_SUCCESS:
+                    print(f"%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+                elif dxl_error != 0:
+                    print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
+                else:
+                    print(f"Dynamixel#{motor_id} has been set max position to {max_position}")
+                    pass
+
+            # Set Min Position
+            if "min_position" in details:
+                min_position = details["min_position"]
+                dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, motor_id, control_table["ADDR_MIN_POSITION"], min_position)
+                if dxl_comm_result != COMM_SUCCESS:
+                    print(f"%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+                elif dxl_error != 0:
+                    print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
+                else:
+                    print(f"Dynamixel#{motor_id} has been set min position to {min_position}")
+                    pass
+
+    def set_baudrate(self):
+        """
+        Sets the baud rate for all motors and the port handler based on the motor_details in the config file.
+        """
+        with self.lock:
+            # Assume the target baudrate is the same for all motors.
+            # Get the target from the first motor in the list.
+            first_motor_id_str = str(self.motor_ids[0])
+            if first_motor_id_str not in config["motor_details"] or "target_baudrate" not in config["motor_details"][first_motor_id_str]:
+                print("Warning: 'target_baudrate' not found in motor_details for the first motor. Skipping baudrate change.")
+                return
+
+            target_baudrate = config["motor_details"][first_motor_id_str]["target_baudrate"]
+            initial_baudrate = config["communication"]["baudrate"]
+
+            # If the target is the same as the initial, no need to change.
+            if target_baudrate == initial_baudrate:
+                print(f"Baudrate is already set to {target_baudrate}. Skipping change.")
+                return
+
+            baudrate_map = control_table["BAUDRATE_MAP"]
+            
+            # JSON keys are strings, so we need to look up with a string
+            target_baudrate_str = str(target_baudrate)
+
+            if target_baudrate_str not in baudrate_map:
+                print(f"Error: Baudrate {target_baudrate} is not supported in control_table.json.")
+                quit()
+
+            baudrate_code = baudrate_map[target_baudrate_str]
+            
+            print(f"==========================================")
+            print(f"Attempting to change baudrate of all motors to {target_baudrate} (Code: {baudrate_code})")
+
+            # It's safer to disable torque before changing critical settings
+            self.disable_torque_all()
+            time.sleep(0.1)
+
+            # Change baudrate for each motor
+            for motor_id in self.motor_ids:
+                dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_BAUD_RATE"], baudrate_code)
+                if dxl_comm_result != COMM_SUCCESS:
+                    print(f"Failed to change baudrate for motor {motor_id}: {self.packetHandler.getTxRxResult(dxl_comm_result)}")
+                elif dxl_error != 0:
+                    print(f"Error on motor {motor_id} while changing baudrate: {self.packetHandler.getRxPacketError(dxl_error)}")
+                else:
+                    print(f"Successfully sent baudrate change command to motor #{motor_id}.")
+            
+            time.sleep(0.5) # Give motors time to process the baudrate change
+
+            # Change the baudrate of the port handler to match the new motor baudrate
+            if self.portHandler.setBaudRate(target_baudrate):
+                print(f"Succeeded to change the port handler baudrate to {target_baudrate}")
+            else:
+                print(f"Failed to change the port handler baudrate to {target_baudrate}")
+                print("Press any key to terminate...")
+                # getch()
+                quit()
 
     def read_states_loop(self):
         # while self.running:
@@ -138,7 +331,7 @@ class DynamixelController:
 
     def disable_torque(self, motor_id: int):
         with self.lock:
-            dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_TORQUE_ENABLE"], config["motor_config"]["torque_disable"])
+            dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_TORQUE_ENABLE"], 1)
             if dxl_comm_result != COMM_SUCCESS:
                 print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
             elif dxl_error != 0:
@@ -148,7 +341,8 @@ class DynamixelController:
             
     def disable_torque_all(self):
         with self.lock:
-            dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, control_table["BROADCAST_ID"], control_table["ADDR_TORQUE_ENABLE"], config["motor_config"]["torque_disable"])
+            dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, control_table["BROADCAST_ID"], control_table["ADDR_TORQUE_ENABLE"], 0)
+            
             if dxl_comm_result != COMM_SUCCESS:
                 print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
             elif dxl_error != 0:
@@ -161,14 +355,11 @@ class DynamixelController:
             for motor_id, position in zip(self.motor_ids, positions):
                 # print(f"[set_goal_position] motor id: {motor_id} / position: {position} / limit: {limit_clamping}")
                 if limit_clamping:
-                    """
-                    author DY
-                    TODO
-                    max & min 은 control table에서 직접 드라이버르부터 읽어온 값을 쓸 수 있도록 수정 필요
-                    """
-                    max_limit = config["max_position_limit"]
-                    min_limit = config["min_position_limit"]
-                    position = max(max_limit, min(position, min_limit))
+                    motor_id_str = str(motor_id)
+                    if motor_id_str in config["motor_details"]:
+                        max_limit = config["motor_details"][motor_id_str]["max_position"]
+                        min_limit = config["motor_details"][motor_id_str]["min_position"]
+                        position = max(min_limit, min(position, max_limit))
 
                 param_goal_position = [DXL_LOBYTE(DXL_LOWORD(position)), DXL_HIBYTE(DXL_LOWORD(position)),
                                        DXL_LOBYTE(DXL_HIWORD(position)), DXL_HIBYTE(DXL_HIWORD(position))]
@@ -229,7 +420,7 @@ class DynamixelController:
                 print("%s" % self.packetHandler.getRxPacketError(dxl_error))
                 print("------------------------------------------")
             else:
-                print("Dynamixel#%d has successfully changed its mode." % motor_id)
+                print("Dynamixel#%d has successfully changed its mode -> %d." % (motor_id, mode))
 
     def get_states(self, visual_flag=True):
         with self.lock:
@@ -242,15 +433,18 @@ class DynamixelController:
                 if not self.groupSyncReadPosition.isAvailable(motor_id, control_table["ADDR_PRESENT_POSITION"],
                                                       control_table["LEN_PRESENT_POSITION"]):
                     print(f"[ID:{motor_id}] groupSyncRead getdata failed")
-                    quit()
+                    return
+                    # quit()
                 if not self.groupSyncReadVelocity.isAvailable(motor_id, control_table["ADDR_PRESENT_VELOCITY"],
                                                               control_table["LEN_PRESENT_VELOCITY"]):
                     print(f"[ID:{motor_id}] groupSyncReadVelocity getdata failed")
-                    quit()
+                    return
+                    # quit()
                 if not self.groupSyncReadCurrent.isAvailable(motor_id, control_table["ADDR_PRESENT_CURRENT"],
                                                              control_table["LEN_PRESENT_CURRENT"]):
                     print(f"[ID:{motor_id}] groupSyncReadCurrent getdata failed")
-                    quit()
+                    return
+                    # quit()
 
             self.state_data = {motor_id: {
                 "present_position": self.groupSyncReadPosition.getData(motor_id, control_table["ADDR_PRESENT_POSITION"], control_table["LEN_PRESENT_POSITION"]),
@@ -265,12 +459,12 @@ class DynamixelController:
             if visual_flag:
                 print("====================================================================")
                 for motor_id in self.motor_ids:
-                    pos = self.state_data[motor_id]["present_position"]
-                    vel = self.state_data[motor_id]["present_velocity"]
-                    cur = self.state_data[motor_id]["present_current"]
+                    pos = ctypes.c_int32(self.state_data[motor_id]["present_position"]).value
+                    vel = ctypes.c_int32(self.state_data[motor_id]["present_velocity"]).value
+                    cur = ctypes.c_int16(self.state_data[motor_id]["present_current"]).value
                     print(f"[read_states_loop] [#{motor_id}] present - pos:{pos},    vel:{vel},    cur:{cur}")
                 print("====================================================================")
-                time.sleep(2)
+                time.sleep(1)
 
     def close(self):
         with self.lock:
