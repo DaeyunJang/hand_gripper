@@ -6,14 +6,17 @@
       {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 0, "Velocity": 100, "Current": 250},
       {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 0, "Velocity": 100, "Current": 250},
       {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 40, "Position": 0, "Velocity": 100, "Current": 250},
       {"ID": 41, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 2048, "Velocity": 100, "Current": 100},
@@ -24,14 +27,17 @@
       {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 3000, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 3000, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 3000, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 40, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 41, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 3000, "Velocity": 100, "Current": 100},
@@ -42,14 +48,17 @@
       {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 40, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 41, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 2048, "Velocity": 100, "Current": 100},
@@ -60,14 +69,17 @@
       {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 40, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 41, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 2048, "Velocity": 100, "Current": 100},
@@ -80,14 +92,17 @@
       {"ID": 11, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 21, "Position": 1024, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 31, "Position": 1024, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 40, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 41, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 3072, "Velocity": 100, "Current": 100},
@@ -98,14 +113,17 @@
       {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 2048, "Velocity": 50, "Current": 200},
       {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 40, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 41, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 2048, "Velocity": 100, "Current": 100},
@@ -117,14 +135,17 @@
       {"ID": 11, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 21, "Position": 1024, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 31, "Position": 1024, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 2048, "Velocity": 100, "Current": 100},
+
       {"ID": 40, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 41, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 3072, "Velocity": 100, "Current": 100},
@@ -135,14 +156,17 @@
       {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 1250, "Velocity": 100, "Current": 100},
+
       {"ID": 40, "Position": 0, "Velocity": 50, "Current": 200},
       {"ID": 41, "Position": 2048, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 2048, "Velocity": 100, "Current": 100},
@@ -155,14 +179,17 @@
       {"ID": 11, "Position": 2630, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 2200, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 21, "Position": 1450, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 2200, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 31, "Position": 1450, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 3072, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 2200, "Velocity": 100, "Current": 100},
+
       {"ID": 40, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 41, "Position": 2630, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 3072, "Velocity": 100, "Current": 100},
@@ -173,14 +200,17 @@
       {"ID": 11, "Position": 2630, "Velocity": 100, "Current": 100},
       {"ID": 12, "Position": 1810, "Velocity": 100, "Current": 100},
       {"ID": 13, "Position": 2200, "Velocity": 100, "Current": 100},
+
       {"ID": 20, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 21, "Position": 1450, "Velocity": 100, "Current": 100},
       {"ID": 22, "Position": 1820, "Velocity": 100, "Current": 100},
       {"ID": 23, "Position": 2200, "Velocity": 100, "Current": 100},
+
       {"ID": 30, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 31, "Position": 1450, "Velocity": 100, "Current": 100},
       {"ID": 32, "Position": 1820, "Velocity": 100, "Current": 100},
       {"ID": 33, "Position": 2200, "Velocity": 100, "Current": 100},
+      
       {"ID": 40, "Position": 2900, "Velocity": 50, "Current": 200},
       {"ID": 41, "Position": 2630, "Velocity": 100, "Current": 100},
       {"ID": 42, "Position": 1810, "Velocity": 100, "Current": 100},

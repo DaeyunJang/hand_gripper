@@ -1,0 +1,102 @@
+{
+  "gripper_name": "MIDAS GRIPPER",
+  "hand": {
+    "__comment": "base to tip",
+    "num_of_fingers": 4,
+    "finger_1": {
+      "ids": [10, 11, 12, 13]
+    },
+    "finger_2": {
+      "ids": [20, 21, 22, 23]
+    },
+    "finger_3": {
+      "ids": [30, 31, 32, 33]
+    },
+    "finger_4": {
+      "ids": [40, 41, 42, 43]
+    }
+  },
+
+  "communication": {
+    "__comment": "WINDOWS: COM*, LINUX: /dev/ttyUSB*",
+    "port": "/dev/ttyUSB0",
+    "protocol_version": 2.0,
+    "baudrate": 1000000
+  },
+
+  "__comment": "global motor setting.",
+  "motor_config": {
+    "series": "X_SERIES",
+    "X_SERIES": {
+      "addr_torque_enable": 64,
+      "addr_goal_position": 116,
+      "len_goal_position": 4,
+      "addr_present_position": 132,
+      "len_present_position": 4,
+      "dxl_minimum_position_value": 0,
+      "dxl_maximum_position_value": 4095
+    },
+    "MX_SERIES": {
+      "addr_torque_enable": 64,
+      "addr_goal_position": 116,
+      "len_goal_position": 4,
+      "addr_present_position": 132,
+      "len_present_position": 4,
+      "dxl_minimum_position_value": 0,
+      "dxl_maximum_position_value": 4095
+    },
+    "PRO_SERIES": {
+        "addr_torque_enable": 562,
+        "addr_goal_position": 596,
+        "len_goal_position": 4,
+        "addr_present_position": 611,
+        "len_present_position": 4,
+        "dxl_minimum_position_value": -150000,
+        "dxl_maximum_position_value": 150000
+    },
+    "P_SERIES": {
+        "addr_torque_enable": 512,
+        "addr_goal_position": 564,
+        "len_goal_position": 4,
+        "addr_present_position": 580,
+        "len_present_position": 4,
+        "dxl_minimum_position_value": -150000,
+        "dxl_maximum_position_value": 150000
+    },
+    "PRO_A_SERIES": {
+      "addr_torque_enable": 512,
+      "addr_goal_position": 564,
+      "len_goal_position": 4,
+      "addr_present_position": 580,
+      "len_present_position": 4,
+      "dxl_minimum_position_value": -150000,
+      "dxl_maximum_position_value": 150000
+    },
+    "__comment": "check the operating mode from control_table",
+    "operating_mode": 5,
+    "torque_enable": 1,
+    "torque_disable": 0
+  },
+  "motor_details": {
+    "__comment": "Per-motor settings. Add settings for each motor ID.",
+    "10": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 250, "homing_offset": 406, "drive_mode": "0x01"},
+    "11": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 0, "drive_mode": "0x00"},
+    "12": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 862, "drive_mode": "0x01"},
+    "13": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 63, "drive_mode": "0x00"},
+
+    "20": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 250, "homing_offset": -1123, "drive_mode": "0x00"},
+    "21": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 0, "drive_mode": "0x00"},
+    "22": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 2364, "drive_mode": "0x01"},
+    "23": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 732, "drive_mode": "0x00"},
+
+    "30": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 250, "homing_offset": -3014, "drive_mode": "0x00"},
+    "31": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 0, "drive_mode": "0x00"},
+    "32": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 1583, "drive_mode": "0x01"},
+    "33": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": -873, "drive_mode": "0x00"},
+    
+    "40": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 250, "homing_offset": 1299, "drive_mode": "0x01"},
+    "41": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 0, "drive_mode": "0x00"},
+    "42": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 600, "drive_mode": "0x01"},
+    "43": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": -1340, "drive_mode": "0x00"}
+  }
+}

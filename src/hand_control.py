@@ -31,8 +31,10 @@ from dynamixel_sdk import *
 #     COMM_SUCCESS, DXL_LOBYTE, DXL_LOWORD, DXL_HIBYTE, DXL_HIWORD
 # )
 
+project_name = "patrol"
+name = f"../config/{project_name}/config.json"
 # Read definitions from .json
-config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../config/config.json")
+config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), f"../config/{project_name}/config.json")
 with open(config_path, "r") as config_file:
     config = json.load(config_file)
 
@@ -40,7 +42,7 @@ control_table_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".
 with open(control_table_path, "r") as config_file:
     control_table = json.load(config_file)
 
-motion_table_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../config/motion_table.json")
+motion_table_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), f"../config/{project_name}/motion_table.json")
 with open(motion_table_path, "r") as config_file:
     motion_table = json.load(config_file)
 
@@ -133,6 +135,8 @@ class DynamixelController:
                 quit()
 
         print(f"==========================================")
+        self.get_states()
+        
         # print(f"Starting with 'torque off'")
         # self.disable_torque_all()
         print(f"Starting with 'torque on'")
@@ -169,6 +173,11 @@ class DynamixelController:
             else:
                 print(f"  Failed to read Homing Offset: {self.packetHandler.getTxRxResult(dxl_comm_result)}")
 
+            # Read Return Delay Time
+            return_delay_time, dxl_comm_result, dxl_error = self.packetHandler.read1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_RETURN_DELAY"])
+            if dxl_comm_result != COMM_SUCCESS:
+                print(f"  Failed to read Return Delay Time: {self.packetHandler.getTxRxResult(dxl_comm_result)}")
+
             # Read Current Limit
             current_limit, dxl_comm_result, dxl_error = self.packetHandler.read2ByteTxRx(self.portHandler, motor_id, control_table["ADDR_CURRENT_LIMIT"])
             if dxl_comm_result == COMM_SUCCESS:
@@ -177,7 +186,7 @@ class DynamixelController:
                 print(f"  Failed to read Current Limit: {self.packetHandler.getTxRxResult(dxl_comm_result)}")
 
 
-            print(f"Motor ID: {motor_id:<4} | Operating Mode: {op_mode:2d} | Drive Mode: {drive_mode:2d} | Homing Offset: {homing_offset_signed:+4d} | Current Limit: {current_limit:+4d} |")
+            print(f"Motor ID: {motor_id:<4} | Operating Mode: {op_mode:2d} | Drive Mode: {drive_mode:2d} | Homing Offset: {homing_offset_signed:+6d} | Return Delay Time: {return_delay_time:4d} ({return_delay_time*2}us) | Current Limit: {current_limit:+5d} |")
             # print(f"==========================================")
 
 
@@ -197,6 +206,18 @@ class DynamixelController:
                     print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
                 else:
                     print(f"Dynamixel#{motor_id} has been set drive mode to {drive_mode_str}")
+                    pass
+
+            # Set Return Delay Time
+            if "return_delay_time" in details:
+                return_delay_time = details["return_delay_time"]
+                dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_RETURN_DELAY"], return_delay_time)
+                if dxl_comm_result != COMM_SUCCESS:
+                    print(f"%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+                elif dxl_error != 0:
+                    print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
+                else:
+                    print(f"Dynamixel#{motor_id} has been set return delay time to {return_delay_time} ({return_delay_time*2}us)")
                     pass
             
             # Set Current Limit
@@ -391,14 +412,14 @@ class DynamixelController:
     def apply_motion(self, same_eta=True):
         with self.lock:
             dxl_comm_result = self.groupSyncWriteCurrent.txPacket()
-            if dxl_comm_result != COMM_SUCCESS:
-                print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+            # if dxl_comm_result != COMM_SUCCESS:
+            #     print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
             dxl_comm_result = self.groupSyncWriteVelocity.txPacket()
-            if dxl_comm_result != COMM_SUCCESS:
-                print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+            # if dxl_comm_result != COMM_SUCCESS:
+            #     print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
             dxl_comm_result = self.groupSyncWritePosition.txPacket()
-            if dxl_comm_result != COMM_SUCCESS:
-                print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+            # if dxl_comm_result != COMM_SUCCESS:
+            #     print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
 
             self.groupSyncWritePosition.clearParam()
             self.groupSyncWriteVelocity.clearParam()
@@ -433,17 +454,17 @@ class DynamixelController:
                 if not self.groupSyncReadPosition.isAvailable(motor_id, control_table["ADDR_PRESENT_POSITION"],
                                                       control_table["LEN_PRESENT_POSITION"]):
                     print(f"[ID:{motor_id}] groupSyncRead getdata failed")
-                    return
+                    continue
                     # quit()
                 if not self.groupSyncReadVelocity.isAvailable(motor_id, control_table["ADDR_PRESENT_VELOCITY"],
                                                               control_table["LEN_PRESENT_VELOCITY"]):
                     print(f"[ID:{motor_id}] groupSyncReadVelocity getdata failed")
-                    return
+                    continue
                     # quit()
                 if not self.groupSyncReadCurrent.isAvailable(motor_id, control_table["ADDR_PRESENT_CURRENT"],
                                                              control_table["LEN_PRESENT_CURRENT"]):
                     print(f"[ID:{motor_id}] groupSyncReadCurrent getdata failed")
-                    return
+                    continue
                     # quit()
 
             self.state_data = {motor_id: {
@@ -464,6 +485,27 @@ class DynamixelController:
                     cur = ctypes.c_int16(self.state_data[motor_id]["present_current"]).value
                     print(f"[read_states_loop] [#{motor_id}] present - pos:{pos},    vel:{vel},    cur:{cur}")
                 print("====================================================================")
+                
+                print("\"new_motion\": [")
+                for i, motor_id in enumerate(self.motor_ids):
+                    pos = self.state_data[motor_id]["present_position"]
+
+                    # Determine Velocity and Current based on motor ID pattern
+                    last_digit = motor_id % 10
+                    vel = 100
+                    cur = 100 # Default
+                    if last_digit == 0:
+                        cur = 200
+                    elif last_digit == 1:
+                        cur = 200
+                    elif last_digit == 2:
+                        cur = 200
+
+                    # Format the output string
+                    line_end = "," if i < len(self.motor_ids) - 1 else ""
+                    print(f'      {{"ID": {motor_id}, "Position": {pos}, "Velocity": {vel}, "Current": {cur}}}{line_end}')
+                print("    ],")
+                
                 time.sleep(1)
 
     def close(self):
@@ -524,16 +566,109 @@ if __name__ == "__main__":
                 print(f"torque off All!")
             elif cmd == "states":
                 dxl.read_states_loop()
+            elif cmd == "loop_motion_full":
+                motion_sequence = [
+                    "left_hand_open",
+                    "left_pinch_index",
+                    "left_pinch_middle",
+                    "left_pinch_ring",
+                    "left_pinch_middle",
+                    "left_pinch_index",
+                    "left_hand_open",
+                    "left_hand_close"
+                ]
+                for i in range(5):
+                    for motion_name in motion_sequence:
+                        print(f"Executing motion: {motion_name}")
+                        try:
+                            motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=motion_name)
+                            motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=motion_name)
+                            
+                            dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
+                            dxl.set_goal_current(motor_current_list_for_motion)
+                            dxl.apply_motion()
+                            
+                            print(f"'{motion_name}' motion applied. Waiting for 2 seconds...")
+                            time.sleep(1)
+                        except ValueError as e:
+                            print(f"Error executing motion '{motion_name}': {e}")
+                            print("Aborting loop motion.")
+                            break
+                    print("Loop motion finished.")
+            
+            elif cmd == "loop_motion_palm":
+                motion_sequence = [
+                    "left_hand_open",
+                    "left_hand_close"
+                ]
+                for i in range(5):
+                    for motion_name in motion_sequence:
+                        print(f"Executing motion: {motion_name}")
+                        try:
+                            motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=motion_name)
+                            motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=motion_name)
+                            dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
+                            dxl.set_goal_current(motor_current_list_for_motion)
+                            dxl.apply_motion()
+                            
+                            print(f"'{motion_name}' motion applied. Waiting for 2 seconds...")
+                            time.sleep(1)
+                        except ValueError as e:
+                            print(f"Error executing motion '{motion_name}': {e}")
+                            print("Aborting loop motion.")
+                            break
+                print("Loop motion finished.")
+            
+            elif cmd == "loop_motion_pinch":
+                try:
+                    motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name="left_hand_open")
+                    motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name="left_hand_open")
+                    dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
+                    dxl.set_goal_current(motor_current_list_for_motion)
+                    dxl.apply_motion()
+                    time.sleep(1)
+                except ValueError as e:
+                    print("Aborting loop motion.")
+                    break
+                motion_sequence = [
+                    "left_pinch_index",
+                    "left_pinch_middle",
+                    "left_pinch_ring",
+                    "left_pinch_middle",
+                    "left_pinch_index",
+                ]
+                for i in range(5):
+                    for motion_name in motion_sequence:
+                        print(f"Executing motion: {motion_name}")
+                        try:
+                            motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=motion_name)
+                            motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=motion_name)
+                            dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
+                            dxl.set_goal_current(motor_current_list_for_motion)
+                            dxl.apply_motion()
+                            
+                            print(f"'{motion_name}' motion applied. Waiting for 2 seconds...")
+                            time.sleep(1)
+                        except ValueError as e:
+                            print(f"Error executing motion '{motion_name}': {e}")
+                            print("Aborting loop motion.")
+                            break
+                print("Loop motion finished.")
+                
             elif cmd == "exit":
                 break
             else:   # cmd = motion name
-                motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=cmd)
-                motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=cmd)
-                # 위치로 이동
-                dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
-                dxl.set_goal_current(motor_current_list_for_motion)
-                dxl.apply_motion()
-                print("Moved to position:", motor_position_list_for_motion)
+                try:
+                    motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=cmd)
+                    motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=cmd)
+                    # 위치로 이동
+                    dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
+                    dxl.set_goal_current(motor_current_list_for_motion)
+                    dxl.apply_motion()
+                    print("Moved to position:", motor_position_list_for_motion)
+                except ValueError as e:
+                    print(f"Error: {e}")
+                    print("Please enter a valid command.")
 
     except Exception as e:
         print("Exception occurred:", e)

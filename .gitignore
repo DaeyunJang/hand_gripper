@@ -2,7 +2,7 @@ build
 install
 log
 .git
-venv
+.venv
 .vscode
 .idea
 **/__pycache__
