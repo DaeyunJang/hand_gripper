@@ -611,8 +611,8 @@ if __name__ == "__main__":
                             dxl.set_goal_current(motor_current_list_for_motion)
                             dxl.apply_motion()
                             
-                            print(f"'{motion_name}' motion applied. Waiting for 2 seconds...")
-                            time.sleep(1)
+                            print(f"'{motion_name}' motion applied. Waiting for 0.5 seconds...")
+                            time.sleep(0.5)
                         except ValueError as e:
                             print(f"Error executing motion '{motion_name}': {e}")
                             print("Aborting loop motion.")
@@ -626,7 +626,7 @@ if __name__ == "__main__":
                     dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
                     dxl.set_goal_current(motor_current_list_for_motion)
                     dxl.apply_motion()
-                    time.sleep(1)
+                    time.sleep(0.5)
                 except ValueError as e:
                     print("Aborting loop motion.")
                     break
@@ -648,7 +648,7 @@ if __name__ == "__main__":
                             dxl.apply_motion()
                             
                             print(f"'{motion_name}' motion applied. Waiting for 2 seconds...")
-                            time.sleep(1)
+                            time.sleep(0.5)
                         except ValueError as e:
                             print(f"Error executing motion '{motion_name}': {e}")
                             print("Aborting loop motion.")

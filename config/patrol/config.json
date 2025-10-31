@@ -19,7 +19,7 @@
 
   "communication": {
     "__comment": "WINDOWS: COM*, LINUX: /dev/ttyUSB*",
-    "port": "/dev/ttyUSB1",
+    "port": "/dev/ttyUSB0",
     "protocol_version": 2.0,
     "baudrate": 1000000
   },
@@ -84,31 +84,31 @@
     "12": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "13": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "14": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x01"},
-    "15": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 50, "homing_offset": 0, "drive_mode": "0x00"},
-    "16": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 50, "homing_offset": 0, "drive_mode": "0x00"},
+    "15": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
+    "16": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
 
     "20": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1000, "max_position": 15000, "current_limit": 300, "homing_offset": -1400, "drive_mode": "0x00"},
     "21": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": -213, "drive_mode": "0x00"},
     "22": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "23": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "24": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 770, "drive_mode": "0x01"},
-    "25": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 50, "homing_offset": -110, "drive_mode": "0x00"},
-    "26": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 50, "homing_offset": 340, "drive_mode": "0x00"},
+    "25": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": -110, "drive_mode": "0x00"},
+    "26": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 340, "drive_mode": "0x00"},
 
     "30": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1000, "max_position": 15000, "current_limit": 300, "homing_offset": -1900, "drive_mode": "0x00"},
     "31": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "32": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "33": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "34": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 10, "drive_mode": "0x01"},
-    "35": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 50, "homing_offset": 15, "drive_mode": "0x00"},
-    "36": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 50, "homing_offset": 0, "drive_mode": "0x00"},
+    "35": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 15, "drive_mode": "0x00"},
+    "36": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
 
     "40": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1000, "max_position": 15000, "current_limit": 300, "homing_offset": -2300, "drive_mode": "0x00"},
     "41": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "42": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": -90, "drive_mode": "0x00"},
     "43": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "44": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x01"},
-    "45": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 50, "homing_offset": -20, "drive_mode": "0x00"},
-    "46": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 50, "homing_offset": 0, "drive_mode": "0x00"}
+    "45": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": -20, "drive_mode": "0x00"},
+    "46": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"}
   }
 }
