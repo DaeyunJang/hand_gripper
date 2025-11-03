@@ -79,24 +79,24 @@
   },
   "motor_details": {
     "__comment": "Per-motor settings. Add settings for each motor ID.",
-    "10": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 250, "homing_offset": 406, "drive_mode": "0x01"},
-    "11": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 0, "drive_mode": "0x00"},
-    "12": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 862, "drive_mode": "0x01"},
+    "10": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 500, "homing_offset": 330, "drive_mode": "0x01"},
+    "11": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
+    "12": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 862, "drive_mode": "0x01"},
     "13": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 63, "drive_mode": "0x00"},
 
-    "20": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 250, "homing_offset": -1123, "drive_mode": "0x00"},
-    "21": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 0, "drive_mode": "0x00"},
-    "22": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 2364, "drive_mode": "0x01"},
+    "20": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 500, "homing_offset": -1123, "drive_mode": "0x00"},
+    "21": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
+    "22": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": -1730, "drive_mode": "0x01"},
     "23": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 732, "drive_mode": "0x00"},
 
-    "30": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 250, "homing_offset": -3014, "drive_mode": "0x00"},
-    "31": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 0, "drive_mode": "0x00"},
-    "32": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 1583, "drive_mode": "0x01"},
+    "30": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 500, "homing_offset": -3000, "drive_mode": "0x00"},
+    "31": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
+    "32": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 1583, "drive_mode": "0x01"},
     "33": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": -873, "drive_mode": "0x00"},
     
-    "40": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 250, "homing_offset": 1299, "drive_mode": "0x01"},
-    "41": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 0, "drive_mode": "0x00"},
-    "42": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": 600, "drive_mode": "0x01"},
+    "40": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 0,    "max_position": 3000, "current_limit": 500, "homing_offset": 1260, "drive_mode": "0x01"},
+    "41": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
+    "42": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 600, "drive_mode": "0x01"},
     "43": { "target_baudrate": 1000000, "return_delay_time": 250, "min_position": 1200, "max_position": 2800, "current_limit": 100, "homing_offset": -1340, "drive_mode": "0x00"}
   }
 }
