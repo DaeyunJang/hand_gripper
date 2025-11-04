@@ -59,7 +59,7 @@
       {"ID": 42, "Position": 2048, "Velocity": 100, "Current": 200},
       {"ID": 43, "Position": 1224, "Velocity": 100, "Current": 100}
     ],
-    "grasp_tool_motion_1-5": [
+    "grasp_tool_motion_2": [
       {"ID": 10, "Position": 2350, "Velocity": 100, "Current": 350},
       {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 200},
       {"ID": 12, "Position": 2237, "Velocity": 100, "Current": 200},
@@ -77,7 +77,7 @@
       {"ID": 42, "Position": 1873, "Velocity": 100, "Current": 200},
       {"ID": 43, "Position": 1205, "Velocity": 100, "Current": 100}
     ],
-    "grasp_tool_motion_2": [
+    "grasp_tool_motion_3": [
       {"ID": 10, "Position": 1150, "Velocity": 100, "Current": 50},
       {"ID": 11, "Position": 2067, "Velocity": 100, "Current": 200},
       {"ID": 12, "Position": 1499, "Velocity": 100, "Current": 50},
@@ -95,7 +95,7 @@
       {"ID": 42, "Position": 1403, "Velocity": 100, "Current": 200},
       {"ID": 43, "Position": 2423, "Velocity": 100, "Current": 100}
     ],
-    "grasp_tool_motion_3": [
+    "grasp_tool_motion_4": [
       {"ID": 10, "Position": 1150, "Velocity": 100, "Current": 350},
       {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 200},
       {"ID": 12, "Position": 1499, "Velocity": 100, "Current": 200},
