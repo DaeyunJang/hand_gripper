@@ -23,6 +23,7 @@ import time
 import threading
 import sys
 import ctypes
+from typing import Dict, Any, Union
 
 from dynamixel_sdk import *
 
@@ -47,13 +48,13 @@ with open(motion_table_path, "r") as config_file:
     motion_table = json.load(config_file)
 
 class DynamixelController:
-    from typing import Dict, Any, Union
-    def __init__(self):
+    def __init__(self, verbose: bool = True):
         """
         author: DY
         note
         load configuration from json file.
         """
+        self.verbose = verbose
         self.lock = threading.RLock()
 
         self.portHandler = PortHandler(config["communication"]["port"])
@@ -76,7 +77,7 @@ class DynamixelController:
 
         # Open port
         if self.portHandler.openPort():
-            print("Succeeded to open the port")
+            if self.verbose: print("Succeeded to open the port")
         else:
             print("Failed to open the port")
             print("Press any key to terminate...")
@@ -85,7 +86,7 @@ class DynamixelController:
             
         # Set port initial baudrate for connection
         if self.portHandler.setBaudRate(config["communication"]["baudrate"]):
-            print(f"Succeeded to change the baudrate to {config['communication']['baudrate']} for initial connection")
+            if self.verbose: print(f"Succeeded to change the baudrate to {config['communication']['baudrate']} for initial connection")
         else:
             print("Failed to change the baudrate")
             print("Press any key to terminate...")
@@ -93,62 +94,73 @@ class DynamixelController:
             quit()
 
         # Change baudrate of motors to target baudrate
-        self.set_baudrate()
+        self.set_baudrate(verbose=self.verbose)
 
         # set initial states
-        print(f"============================")
-        print(f"Set operation mode")
+        if self.verbose: print(f"============================")
+        if self.verbose: print(f"Set operation mode")
         for motor_id in self.motor_ids:
-            self.set_op_mode(motor_id=motor_id, mode=self.operation_mode)
+            self.set_op_mode(motor_id=motor_id, mode=self.operation_mode, verbose=self.verbose)
             
-        print(f"==========================================")
-        print(f"Set motor details from config.json")
+        if self.verbose: print(f"==========================================")
+        if self.verbose: print(f"Set motor details from config.json")
         for motor_id in self.motor_ids:
-            self.set_motor_details(motor_id)
+            self.set_motor_details(motor_id, verbose=self.verbose)
         
-        print(f"==========================================")
-        print(f"Logs...")
+        if self.verbose: print(f"==========================================")
+        if self.verbose: print(f"Logs...")
         for motor_id in self.motor_ids:
-            self.log_motor_status(motor_id)
+            self.log_motor_status(motor_id, verbose=self.verbose)
 
         # Regist Parameter
-        print(f"==========================================")
-        print(f"Registry parameters")
+        if self.verbose: print(f"==========================================")
+        if self.verbose: print(f"Registry parameters")
         for motor_id in self.motor_ids:
             dxl_addparam_result = self.groupSyncReadPosition.addParam(motor_id)
             if dxl_addparam_result == True:
-                print("[ID:%03d] groupSyncReadPosition addparam succeed" % motor_id)
+                if self.verbose: print("[ID:%03d] groupSyncReadPosition addparam succeed" % motor_id)
             else:
                 print("[ID:%03d] groupSyncReadPosition addparam failed" % motor_id)
                 quit()
             dxl_addparam_result = self.groupSyncReadVelocity.addParam(motor_id)
             if dxl_addparam_result == True:
-                print("[ID:%03d] groupSyncReadVelocity addparam succeed" % motor_id)
+                if self.verbose: print("[ID:%03d] groupSyncReadVelocity addparam succeed" % motor_id)
             else:
                 print("[ID:%03d] groupSyncReadVelocity addparam failed" % motor_id)
                 quit()
             dxl_addparam_result = self.groupSyncReadCurrent.addParam(motor_id)
             if dxl_addparam_result == True:
-                print("[ID:%03d] groupSyncReadCurrent addparam succeed" % motor_id)
+                if self.verbose: print("[ID:%03d] groupSyncReadCurrent addparam succeed" % motor_id)
             else:
                 print("[ID:%03d] groupSyncReadCurrent addparam failed" % motor_id)
                 quit()
 
-        print(f"==========================================")
-        self.get_states()
+        if self.verbose: print(f"==========================================")
+        self.get_states(verbose=self.verbose)
         
         # print(f"Starting with 'torque off'")
         # self.disable_torque_all()
-        print(f"Starting with 'torque on'")
-        self.enable_torque_all()
+        if self.verbose: print(f"Starting with 'torque on'")
+        self.enable_torque_all(verbose=self.verbose)
 
-        print(f"Threading start")
+        if self.verbose: print(f"Threading start")
         # flag for threading
         self.running = True
         # self.read_state_thread = threading.Thread(target=self.read_states_loop, daemon=True)
         # self.read_state_thread.start()
 
-    def log_motor_status(self, motor_id: int):
+        if self.verbose:
+            print(f"==========================================")
+            print(f"Available motions in motion_table.json:")
+            motions = motion_table.get('motion', {}).keys()
+            if motions:
+                for motion_name in motions:
+                    print(f"- {motion_name}")
+            else:
+                print("No motions found.")
+            print(f"==========================================")
+
+    def log_motor_status(self, motor_id: int, verbose: bool = True):
         with self.lock:
             
             # Read Operating Mode
@@ -186,11 +198,11 @@ class DynamixelController:
                 print(f"  Failed to read Current Limit: {self.packetHandler.getTxRxResult(dxl_comm_result)}")
 
 
-            print(f"Motor ID: {motor_id:<4} | Operating Mode: {op_mode:2d} | Drive Mode: {drive_mode:2d} | Homing Offset: {homing_offset_signed:+6d} | Return Delay Time: {return_delay_time:4d} ({return_delay_time*2}us) | Current Limit: {current_limit:+5d} |")
+            if verbose: print(f"Motor ID: {motor_id:<4} | Operating Mode: {op_mode:2d} | Drive Mode: {drive_mode:2d} | Homing Offset: {homing_offset_signed:+6d} | Return Delay Time: {return_delay_time:4d} ({return_delay_time*2}us) | Current Limit: {current_limit:+5d} |")
             # print(f"==========================================")
 
 
-    def set_motor_details(self, motor_id: int):
+    def set_motor_details(self, motor_id: int, verbose: bool = True):
         motor_id_str = str(motor_id)
         if motor_id_str in config["motor_details"]:
             details = config["motor_details"][motor_id_str]
@@ -205,7 +217,7 @@ class DynamixelController:
                 elif dxl_error != 0:
                     print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
                 else:
-                    print(f"Dynamixel#{motor_id} has been set drive mode to {drive_mode_str}")
+                    if verbose: print(f"Dynamixel#{motor_id} has been set drive mode to {drive_mode_str}")
                     pass
 
             # Set Return Delay Time
@@ -217,7 +229,7 @@ class DynamixelController:
                 elif dxl_error != 0:
                     print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
                 else:
-                    print(f"Dynamixel#{motor_id} has been set return delay time to {return_delay_time} ({return_delay_time*2}us)")
+                    if verbose: print(f"Dynamixel#{motor_id} has been set return delay time to {return_delay_time} ({return_delay_time*2}us)")
                     pass
             
             # Set Current Limit
@@ -228,7 +240,7 @@ class DynamixelController:
             elif dxl_error != 0:
                 print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
             else:
-                print(f"Dynamixel#{motor_id} has been set current limit to {current_limit}")
+                if verbose: print(f"Dynamixel#{motor_id} has been set current limit to {current_limit}")
                 pass
 
             # Set Homing Offset
@@ -240,7 +252,7 @@ class DynamixelController:
             elif dxl_error != 0:
                 print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
             else:
-                print(f"Dynamixel#{motor_id} has been set homing offset to {homing_offset}")
+                if verbose: print(f"Dynamixel#{motor_id} has been set homing offset to {homing_offset}")
                 pass
 
             # Set Max Position
@@ -252,7 +264,7 @@ class DynamixelController:
                 elif dxl_error != 0:
                     print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
                 else:
-                    print(f"Dynamixel#{motor_id} has been set max position to {max_position}")
+                    if verbose: print(f"Dynamixel#{motor_id} has been set max position to {max_position}")
                     pass
 
             # Set Min Position
@@ -264,10 +276,10 @@ class DynamixelController:
                 elif dxl_error != 0:
                     print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
                 else:
-                    print(f"Dynamixel#{motor_id} has been set min position to {min_position}")
+                    if verbose: print(f"Dynamixel#{motor_id} has been set min position to {min_position}")
                     pass
 
-    def set_baudrate(self):
+    def set_baudrate(self, verbose: bool = True):
         """
         Sets the baud rate for all motors and the port handler based on the motor_details in the config file.
         """
@@ -276,7 +288,7 @@ class DynamixelController:
             # Get the target from the first motor in the list.
             first_motor_id_str = str(self.motor_ids[0])
             if first_motor_id_str not in config["motor_details"] or "target_baudrate" not in config["motor_details"][first_motor_id_str]:
-                print("Warning: 'target_baudrate' not found in motor_details for the first motor. Skipping baudrate change.")
+                if verbose: print("Warning: 'target_baudrate' not found in motor_details for the first motor. Skipping baudrate change.")
                 return
 
             target_baudrate = config["motor_details"][first_motor_id_str]["target_baudrate"]
@@ -284,7 +296,7 @@ class DynamixelController:
 
             # If the target is the same as the initial, no need to change.
             if target_baudrate == initial_baudrate:
-                print(f"Baudrate is already set to {target_baudrate}. Skipping change.")
+                if verbose: print(f"Baudrate is already set to {target_baudrate}. Skipping change.")
                 return
 
             baudrate_map = control_table["BAUDRATE_MAP"]
@@ -298,11 +310,11 @@ class DynamixelController:
 
             baudrate_code = baudrate_map[target_baudrate_str]
             
-            print(f"==========================================")
-            print(f"Attempting to change baudrate of all motors to {target_baudrate} (Code: {baudrate_code})")
+            if verbose: print(f"==========================================")
+            if verbose: print(f"Attempting to change baudrate of all motors to {target_baudrate} (Code: {baudrate_code})")
 
             # It's safer to disable torque before changing critical settings
-            self.disable_torque_all()
+            self.disable_torque_all(verbose=verbose)
             time.sleep(0.1)
 
             # Change baudrate for each motor
@@ -313,24 +325,24 @@ class DynamixelController:
                 elif dxl_error != 0:
                     print(f"Error on motor {motor_id} while changing baudrate: {self.packetHandler.getRxPacketError(dxl_error)}")
                 else:
-                    print(f"Successfully sent baudrate change command to motor #{motor_id}.")
+                    if verbose: print(f"Successfully sent baudrate change command to motor #{motor_id}.")
             
             time.sleep(0.5) # Give motors time to process the baudrate change
 
             # Change the baudrate of the port handler to match the new motor baudrate
             if self.portHandler.setBaudRate(target_baudrate):
-                print(f"Succeeded to change the port handler baudrate to {target_baudrate}")
+                if verbose: print(f"Succeeded to change the port handler baudrate to {target_baudrate}")
             else:
                 print(f"Failed to change the port handler baudrate to {target_baudrate}")
                 print("Press any key to terminate...")
                 # getch()
                 quit()
 
-    def read_states_loop(self):
+    def read_states_loop(self, verbose: bool = True):
         # while self.running:
-        self.get_states()
+        self.get_states(verbose=verbose)
 
-    def enable_torque(self, motor_id: int):
+    def enable_torque(self, motor_id: int, verbose: bool = True):
         with self.lock:
             dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_TORQUE_ENABLE"], config["motor_config"]["torque_enable"])
             if dxl_comm_result != COMM_SUCCESS:
@@ -338,9 +350,9 @@ class DynamixelController:
             elif dxl_error != 0:
                 print("%s" % self.packetHandler.getRxPacketError(dxl_error))
             else:
-                print("Dynamixel#%d has successfully enable." % motor_id)
+                if verbose: print("Dynamixel#%d has successfully enable." % motor_id)
 
-    def enable_torque_all(self):
+    def enable_torque_all(self, verbose: bool = True):
         with self.lock:
             dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, control_table["BROADCAST_ID"], control_table["ADDR_TORQUE_ENABLE"], config["motor_config"]["torque_enable"])
             if dxl_comm_result != COMM_SUCCESS:
@@ -348,9 +360,9 @@ class DynamixelController:
             elif dxl_error != 0:
                 print("%s" % self.packetHandler.getRxPacketError(dxl_error))
             else:
-                print("Dynamixel#ALL has successfully enable.")
+                if verbose: print("Dynamixel#ALL has successfully enable.")
 
-    def disable_torque(self, motor_id: int):
+    def disable_torque(self, motor_id: int, verbose: bool = True):
         with self.lock:
             dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, motor_id, control_table["ADDR_TORQUE_ENABLE"], 1)
             if dxl_comm_result != COMM_SUCCESS:
@@ -358,9 +370,9 @@ class DynamixelController:
             elif dxl_error != 0:
                 print("%s" % self.packetHandler.getRxPacketError(dxl_error))
             else:
-                print("Dynamixel#%d has successfully disable." % motor_id)
+                if verbose: print("Dynamixel#%d has successfully disable." % motor_id)
             
-    def disable_torque_all(self):
+    def disable_torque_all(self, verbose: bool = True):
         with self.lock:
             dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, control_table["BROADCAST_ID"], control_table["ADDR_TORQUE_ENABLE"], 0)
             
@@ -369,9 +381,9 @@ class DynamixelController:
             elif dxl_error != 0:
                 print("%s" % self.packetHandler.getRxPacketError(dxl_error))
             else:
-                print("Dynamixel#ALL has successfully disable.")
+                if verbose: print("Dynamixel#ALL has successfully disable.")
 
-    def set_goal_positions(self, positions: list[int], limit_clamping: bool=False):
+    def set_goal_positions(self, positions: list[int], limit_clamping: bool=False, verbose: bool = True):
         with self.lock:
             for motor_id, position in zip(self.motor_ids, positions):
                 # print(f"[set_goal_position] motor id: {motor_id} / position: {position} / limit: {limit_clamping}")
@@ -390,7 +402,7 @@ class DynamixelController:
                     print("[ID:%03d] groupSyncWrite addparam failed" % motor_id)
                     quit()
         
-    def set_goal_velocity(self, velocities: list[int]):
+    def set_goal_velocity(self, velocities: list[int], verbose: bool = True):
         with self.lock:
             for motor_id, velocity in zip(self.motor_ids, velocities):
                 param_goal_velocity = [DXL_LOBYTE(DXL_LOWORD(velocity)), DXL_HIBYTE(DXL_LOWORD(velocity)),
@@ -400,7 +412,7 @@ class DynamixelController:
                     print("[ID:%03d] groupSyncWrite addparam failed" % motor_id)
                     quit()
 
-    def set_goal_current(self, currents: list[int]):
+    def set_goal_current(self, currents: list[int], verbose: bool = True):
         with self.lock:
             for motor_id, current in zip(self.motor_ids, currents):
                 param_goal_current = [DXL_LOBYTE(DXL_LOWORD(current)), DXL_HIBYTE(DXL_LOWORD(current))]
@@ -425,7 +437,41 @@ class DynamixelController:
             self.groupSyncWriteVelocity.clearParam()
             self.groupSyncWriteCurrent.clearParam()
 
-    def set_op_mode(self, motor_id: int, mode: int):
+    def execute_motion(self, motion_name: str, reload_table: bool = True, limit_clamping: bool = False, verbose: bool = True):
+        """Load a motion by name from the motion table and apply it.
+
+        This centralizes the common sequence of: reload motion table (optional),
+        load positions & currents, set goals and apply the motion.
+        """
+        if reload_table:
+            reload_motion_table()
+
+        # Load positions and currents (these will raise ValueError if not found)
+        motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=motion_name)
+        motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=motion_name)
+
+        # Apply to motors
+        self.set_goal_positions(motor_position_list_for_motion, limit_clamping=limit_clamping, verbose=verbose)
+        self.set_goal_current(motor_current_list_for_motion, verbose=verbose)
+        self.apply_motion()
+
+        if verbose:
+            print(f"Moved to position for: {motion_name}")
+
+    def reboot_all_motors(self, verbose: bool = True):
+        """
+        Reboots all connected Dynamixel motors.
+        """
+        with self.lock:
+            if verbose: print("Attempting to reboot all motors...")
+            # The reboot instruction for protocol 2.0
+            # Using broadcast ID will not return a status packet, so we don't check the result.
+            self.packetHandler.reboot(self.portHandler, control_table["BROADCAST_ID"])
+            if verbose: print("Reboot command sent to all motors.")
+            if verbose: print("Please wait a moment for the motors to restart.")
+            if verbose: print("It is recommended to restart this script after rebooting the motors.")
+
+    def set_op_mode(self, motor_id: int, mode: int, verbose: bool = True):
         with self.lock:
             dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, motor_id,
                                                                            control_table["ADDR_OPERATING_MODE"],
@@ -441,9 +487,9 @@ class DynamixelController:
                 print("%s" % self.packetHandler.getRxPacketError(dxl_error))
                 print("------------------------------------------")
             else:
-                print("Dynamixel#%d has successfully changed its mode -> %d." % (motor_id, mode))
+                if verbose: print("Dynamixel#%d has successfully changed its mode -> %d." % (motor_id, mode))
 
-    def get_states(self, visual_flag=True):
+    def get_states(self, verbose=True):
         with self.lock:
             self.groupSyncReadPosition.txRxPacket()
             self.groupSyncReadVelocity.txRxPacket()
@@ -477,7 +523,7 @@ class DynamixelController:
             # self.groupSyncReadVelocity.clearParam()
             # self.groupSyncReadCurrent.clearParam()
 
-            if visual_flag:
+            if verbose:
                 print("====================================================================")
                 for motor_id in self.motor_ids:
                     pos = ctypes.c_int32(self.state_data[motor_id]["present_position"]).value
@@ -508,16 +554,26 @@ class DynamixelController:
                 
                 time.sleep(1)
 
-    def close(self):
+    def close(self, rebooting=False, verbose: bool = True):
         with self.lock:
-            # self.disable_torque()
             self.running = False
-            self.disable_torque_all()
-            print(f"torque off all !")
+            if not self.portHandler.is_open:
+                return
+
+            if not rebooting:
+                try:
+                    self.disable_torque_all(verbose=verbose)
+                    if verbose: print("torque off all !")
+                except Exception as e:
+                    print(f"Could not disable torque: {e}")
+
             self.portHandler.closePort()
-            print(f"DXL port closed")
-            self.read_state_thread.join()
-            print(f"read_state_thread closed")
+            if verbose: print("DXL port closed")
+
+            # The thread was never started, so this line causes an error.
+            # if hasattr(self, 'read_state_thread') and self.read_state_thread.is_alive():
+            #     self.read_state_thread.join()
+            #     print(f"read_state_thread closed")
 
 def load_motion_positions(data: dict, motion_name: str) -> list[int]:
     motion_data = data
@@ -545,132 +601,111 @@ def load_motion_current(data: dict, motion_name: str) -> list[int]:
 
     return currents
 
-if __name__ == "__main__":
-    import time, keyboard, signal
+def reload_motion_table():
+    """Reloads the motion table from the JSON file."""
+    global motion_table
+    with open(motion_table_path, "r") as config_file:
+        motion_table = json.load(config_file)
+    print("motion_table.json has been reloaded.")
 
-    motor_position_list_for_motion = []
-    motor_current_list_for_motion = []
-    dxl = DynamixelController()
-
-    # dxl.read_states_loop(visual_flag=True)
-
+def main_control_loop():
+    """Main control loop for interacting with the Dynamixel controller."""
+    dxl = None
     try:
+        dxl = DynamixelController(verbose=True) # <-- verbose=False로 변경하면 로그가 출력되지 않습니다.
         while True:
-            cmd = input("Enter command (torque_on, torque_off, get_states, exit): ").strip()
+            cmd = input("Enter command (e.g., motion_1, reload, reboot, exit): ").strip()
             print(f"input cmd: {cmd}")
-            if cmd == "torqueOnAll":
+
+            if cmd == "reboot":
+                dxl.reboot_all_motors()
+                dxl.close(rebooting=True)
+                return 'reboot'  # Signal to the outer loop to restart
+
+            elif cmd == "exit":
+                dxl.close()
+                return 'exit'  # Signal to the outer loop to terminate
+
+            elif cmd == "torqueOnAll":
                 dxl.enable_torque_all()
                 print(f"torque on All!")
             elif cmd == "torqueOffAll":
                 dxl.disable_torque_all()
                 print(f"torque off All!")
             elif cmd == "states":
-                dxl.read_states_loop()
-            elif cmd == "loop_motion_full":
-                motion_sequence = [
-                    "left_hand_open",
-                    "left_pinch_index",
-                    "left_pinch_middle",
-                    "left_pinch_ring",
-                    "left_pinch_middle",
-                    "left_pinch_index",
-                    "left_hand_open",
-                    "left_hand_close"
-                ]
+                dxl.read_states_loop(verbose=True)
+            elif cmd == "reload":
+                reload_motion_table()
+            elif cmd.startswith("loop_motion"):
+                reload_motion_table()
+                if cmd == "loop_motion_full":
+                    motion_sequence = [
+                        "left_hand_open", "left_pinch_index", "left_pinch_middle",
+                        "left_pinch_ring", "left_pinch_middle", "left_pinch_index",
+                        "left_hand_open", "left_hand_close"
+                    ]
+                elif cmd == "loop_motion_palm":
+                    motion_sequence = ["left_hand_open", "left_hand_close"]
+                elif cmd == "loop_motion_pinch":
+                    try:
+                        # Initial position
+                        # Use new helper to set initial position
+                        dxl.execute_motion("left_hand_open", reload_table=False, limit_clamping=False)
+                        time.sleep(0.5)
+                    except ValueError as e:
+                        print(f"Error setting initial position for pinch loop: {e}")
+                        continue
+                    motion_sequence = [
+                        "left_pinch_index", "left_pinch_middle", "left_pinch_ring",
+                        "left_pinch_middle", "left_pinch_index"
+                    ]
+                else:
+                    print(f"Unknown loop command: {cmd}")
+                    continue
+
                 for i in range(5):
                     for motion_name in motion_sequence:
                         print(f"Executing motion: {motion_name}")
                         try:
-                            motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=motion_name)
-                            motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=motion_name)
-                            
-                            dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
-                            dxl.set_goal_current(motor_current_list_for_motion)
-                            dxl.apply_motion()
-                            
-                            print(f"'{motion_name}' motion applied. Waiting for 2 seconds...")
-                            time.sleep(1)
-                        except ValueError as e:
-                            print(f"Error executing motion '{motion_name}': {e}")
-                            print("Aborting loop motion.")
-                            break
-                    print("Loop motion finished.")
-            
-            elif cmd == "loop_motion_palm":
-                motion_sequence = [
-                    "left_hand_open",
-                    "left_hand_close"
-                ]
-                for i in range(5):
-                    for motion_name in motion_sequence:
-                        print(f"Executing motion: {motion_name}")
-                        try:
-                            motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=motion_name)
-                            motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=motion_name)
-                            dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
-                            dxl.set_goal_current(motor_current_list_for_motion)
-                            dxl.apply_motion()
-                            
-                            print(f"'{motion_name}' motion applied. Waiting for 0.5 seconds...")
-                            time.sleep(0.5)
+                            # Use centralized method
+                            dxl.execute_motion(motion_name, reload_table=False, limit_clamping=False)
+
+                            sleep_time = 0.5 if "pinch" in cmd or "palm" in cmd else 1
+                            print(f"'{motion_name}' motion applied. Waiting for {sleep_time} seconds...")
+                            time.sleep(sleep_time)
                         except ValueError as e:
                             print(f"Error executing motion '{motion_name}': {e}")
                             print("Aborting loop motion.")
                             break
                 print("Loop motion finished.")
             
-            elif cmd == "loop_motion_pinch":
+            else:  # cmd = motion name
                 try:
-                    motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name="left_hand_open")
-                    motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name="left_hand_open")
-                    dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
-                    dxl.set_goal_current(motor_current_list_for_motion)
-                    dxl.apply_motion()
-                    time.sleep(0.5)
-                except ValueError as e:
-                    print("Aborting loop motion.")
-                    break
-                motion_sequence = [
-                    "left_pinch_index",
-                    "left_pinch_middle",
-                    "left_pinch_ring",
-                    "left_pinch_middle",
-                    "left_pinch_index",
-                ]
-                for i in range(5):
-                    for motion_name in motion_sequence:
-                        print(f"Executing motion: {motion_name}")
-                        try:
-                            motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=motion_name)
-                            motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=motion_name)
-                            dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
-                            dxl.set_goal_current(motor_current_list_for_motion)
-                            dxl.apply_motion()
-                            
-                            print(f"'{motion_name}' motion applied. Waiting for 2 seconds...")
-                            time.sleep(0.5)
-                        except ValueError as e:
-                            print(f"Error executing motion '{motion_name}': {e}")
-                            print("Aborting loop motion.")
-                            break
-                print("Loop motion finished.")
-                
-            elif cmd == "exit":
-                break
-            else:   # cmd = motion name
-                try:
-                    motor_position_list_for_motion = load_motion_positions(data=motion_table, motion_name=cmd)
-                    motor_current_list_for_motion = load_motion_current(data=motion_table, motion_name=cmd)
-                    # 위치로 이동
-                    dxl.set_goal_positions(motor_position_list_for_motion, limit_clamping=False)
-                    dxl.set_goal_current(motor_current_list_for_motion)
-                    dxl.apply_motion()
-                    print("Moved to position:", motor_position_list_for_motion)
+                    # execute_motion will reload the table by default
+                    dxl.execute_motion(cmd)
                 except ValueError as e:
                     print(f"Error: {e}")
                     print("Please enter a valid command.")
 
     except Exception as e:
-        print("Exception occurred:", e)
+        print(f"An exception occurred in the main loop: {e}")
     finally:
-        dxl.close()
+        if dxl:
+            dxl.close()
+        # return 'exit'
+
+if __name__ == "__main__":
+    import time, keyboard, signal
+
+    while True:
+        status = main_control_loop()
+        if status == 'reboot':
+            print("Waiting for motors to restart (5 seconds)...")
+            time.sleep(5)
+            print("==================================================")
+            print("Re-initializing controller...")
+            print("==================================================")
+            continue
+        elif status == 'exit':
+            print("Program terminated.")
+            break
