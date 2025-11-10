@@ -607,6 +607,15 @@ def reload_motion_table():
     with open(motion_table_path, "r") as config_file:
         motion_table = json.load(config_file)
     print("motion_table.json has been reloaded.")
+    print(f"==========================================")
+    print(f"Available motions in motion_table.json:")
+    motions = motion_table.get('motion', {}).keys()
+    if motions:
+        for motion_name in motions:
+            print(f"- {motion_name}")
+    else:
+        print("No motions found.")
+    print(f"==========================================")
 
 def main_control_loop():
     """Main control loop for interacting with the Dynamixel controller."""
