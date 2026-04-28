@@ -32,7 +32,7 @@ from dynamixel_sdk import *
 #     COMM_SUCCESS, DXL_LOBYTE, DXL_LOWORD, DXL_HIBYTE, DXL_HIWORD
 # )
 
-project_name = "midas"
+project_name = "linear_finger_gripper"
 name = f"../config/{project_name}/config.json"
 # Read definitions from .json
 config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), f"../config/{project_name}/config.json")
@@ -57,6 +57,7 @@ class DynamixelController:
         self.verbose = verbose
         self.lock = threading.RLock()
 
+        print(config["communication"]["port"])
         self.portHandler = PortHandler(config["communication"]["port"])
         self.packetHandler = PacketHandler(config["communication"]["protocol_version"])
         self.groupSyncWritePosition = GroupSyncWrite(self.portHandler, self.packetHandler, control_table["ADDR_GOAL_POSITION"], control_table["LEN_GOAL_POSITION"])
@@ -647,10 +648,10 @@ def main_control_loop():
                 reload_motion_table()
             elif cmd == "loop_motion_sym":
                 motion_sequence = [
-                        "open_symmetric",
-                        "close_symmetric",
+                        "left_hand_close",
+                        "left_hand_open",
                     ]
-                for i in range(5):
+                for i in range(1):
                     for motion_name in motion_sequence:
                         print(f"Executing motion: {motion_name}")
                         try:
@@ -661,7 +662,7 @@ def main_control_loop():
                             dxl.set_goal_current(motor_current_list_for_motion)
                             dxl.apply_motion()
                             
-                            sleep_time = 2.0
+                            sleep_time = 1.0
                             print(f"'{motion_name}' motion applied. Waiting for {sleep_time} seconds...")
                             time.sleep(sleep_time)
                         except ValueError as e:

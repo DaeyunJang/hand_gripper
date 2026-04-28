@@ -1,0 +1,79 @@
+{
+  "motion": {
+    "//comment": "---------------------common motion---------------------",
+
+    "o": [
+      {"ID": 11, "Position": 2048, "Velocity": 10, "Current": 200},
+      {"ID": 12, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 13, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 23, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 33, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 41, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 43, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 51, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 53, "Position": 2048, "Velocity": 100, "Current": 200}
+    ],
+
+    "g": [
+      {"ID": 11, "Position": 1450, "Velocity": 10, "Current": 200},
+      {"ID": 12, "Position": 1200, "Velocity": 100, "Current": 200},
+      {"ID": 13, "Position": 2500, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position":  900, "Velocity": 200, "Current": 200},
+      {"ID": 22, "Position":  150, "Velocity": 200, "Current": 200},
+      {"ID": 23, "Position": 2048, "Velocity": 200, "Current": 200},
+      {"ID": 31, "Position":  900, "Velocity": 200, "Current": 200},
+      {"ID": 32, "Position":  150, "Velocity": 200, "Current": 200},
+      {"ID": 33, "Position": 2048, "Velocity": 200, "Current": 200},
+      {"ID": 41, "Position":  900, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position":  150, "Velocity": 100, "Current": 200},
+      {"ID": 43, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 51, "Position":  900, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position":  150, "Velocity": 100, "Current": 200},
+      {"ID": 53, "Position": 2048, "Velocity": 100, "Current": 200}
+    ],
+
+    "v": [
+      {"ID": 11, "Position": 1474, "Velocity": 100, "Current": 200},
+      {"ID": 12, "Position": 1216, "Velocity": 100, "Current": 200},
+      {"ID": 13, "Position": 2485, "Velocity": 100, "Current": 100},
+      {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 23, "Position": 2200, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 33, "Position": 1950, "Velocity": 100, "Current": 200},
+      {"ID": 41, "Position": 900, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 250, "Velocity": 100, "Current": 200},
+      {"ID": 43, "Position": 2048, "Velocity": 100, "Current": 100},
+      {"ID": 51, "Position": 900, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 250, "Velocity": 100, "Current": 200},
+      {"ID": 53, "Position": 2048, "Velocity": 100, "Current": 100}
+    ],
+
+      "p": [
+      {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 12, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 13, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 23, "Position": 2200, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 900, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 250, "Velocity": 100, "Current": 200},
+      {"ID": 33, "Position": 2048, "Velocity": 100, "Current": 100},
+      {"ID": 41, "Position": 900, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 250, "Velocity": 100, "Current": 200},
+      {"ID": 43, "Position": 2048, "Velocity": 100, "Current": 100},
+      {"ID": 51, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 53, "Position": 1950, "Velocity": 100, "Current": 100}
+    ],
+
+    "//comment-specific-motion": "---------------------specific motion---------------------"
+  }
+}

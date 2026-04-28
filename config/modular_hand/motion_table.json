@@ -1,0 +1,139 @@
+{
+  "motion": {
+    "//comment": "---------------------common motion---------------------",
+    "home": [
+      {"ID": 10, "Position": 1454, "Velocity": 100, "Current": 200},
+      {"ID": 11, "Position": 2661, "Velocity": 100, "Current": 200},
+      {"ID": 12, "Position": 2929, "Velocity": 100, "Current": 200},
+
+      {"ID": 20, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 200},
+
+      {"ID": 30, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 2048, "Velocity": 100, "Current": 200},
+
+      {"ID": 40, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 41, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 2048, "Velocity": 100, "Current": 200},
+
+      {"ID": 50, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 51, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 2048, "Velocity": 100, "Current": 200}
+    ],
+
+    "hand_open": [
+      {"ID": 10, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 11, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 12, "Position": 2048, "Velocity": 100, "Current": 200},
+
+      {"ID": 20, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 2048, "Velocity": 100, "Current": 200},
+
+      {"ID": 30, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 2048, "Velocity": 100, "Current": 200},
+
+      {"ID": 40, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 41, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 2048, "Velocity": 100, "Current": 200},
+
+      {"ID": 50, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 51, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 2048, "Velocity": 100, "Current": 200}
+    ],
+
+    "palm_grip": [
+      {"ID": 10, "Position": 2281, "Velocity": 100, "Current": 150},
+      {"ID": 11, "Position": 2414, "Velocity": 100, "Current": 150},
+      {"ID": 12, "Position": 2952, "Velocity": 100, "Current": 150},
+      {"ID": 20, "Position": 2080, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position": 3052, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 3772, "Velocity": 100, "Current": 200},
+      {"ID": 30, "Position": 2060, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 3103, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 3811, "Velocity": 100, "Current": 200},
+      {"ID": 40, "Position": 2016, "Velocity": 100, "Current": 200},
+      {"ID": 41, "Position": 3046, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 3803, "Velocity": 100, "Current": 200},
+      {"ID": 50, "Position": 1884, "Velocity": 100, "Current": 200},
+      {"ID": 51, "Position": 1017, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 245, "Velocity": 100, "Current": 200}
+    ],
+
+    "pinch_index": [
+      {"ID": 10, "Position": 2167, "Velocity": 100, "Current": 200},
+      {"ID": 11, "Position": 2395, "Velocity": 100, "Current": 200},
+      {"ID": 12, "Position": 2681, "Velocity": 100, "Current": 200},
+      {"ID": 20, "Position": 1956, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position": 2951, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 3224, "Velocity": 100, "Current": 200},
+      {"ID": 30, "Position": 1857, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 2041, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 2202, "Velocity": 100, "Current": 200},
+      {"ID": 40, "Position": 1953, "Velocity": 100, "Current": 200},
+      {"ID": 41, "Position": 2022, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 2205, "Velocity": 100, "Current": 200},
+      {"ID": 50, "Position": 1992, "Velocity": 100, "Current": 200},
+      {"ID": 51, "Position": 2046, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 1896, "Velocity": 100, "Current": 200}
+    ],
+    
+    "pinch_middle": [
+      {"ID": 10, "Position": 2377, "Velocity": 100, "Current": 200},
+      {"ID": 11, "Position": 2521, "Velocity": 100, "Current": 200},
+      {"ID": 12, "Position": 2713, "Velocity": 100, "Current": 200},
+      {"ID": 20, "Position": 1860, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position": 2162, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 2140, "Velocity": 100, "Current": 200},
+      {"ID": 30, "Position": 1928, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 2998, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 3251, "Velocity": 100, "Current": 200},
+      {"ID": 40, "Position": 1953, "Velocity": 100, "Current": 200},
+      {"ID": 41, "Position": 2029, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 2212, "Velocity": 100, "Current": 200},
+      {"ID": 50, "Position": 1990, "Velocity": 100, "Current": 200},
+      {"ID": 51, "Position": 2045, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 1898, "Velocity": 100, "Current": 200}
+    ],
+
+    "pinch_ring": [
+      {"ID": 10, "Position": 2609, "Velocity": 100, "Current": 200},
+      {"ID": 11, "Position": 2323, "Velocity": 100, "Current": 200},
+      {"ID": 12, "Position": 2649, "Velocity": 100, "Current": 200},
+      {"ID": 20, "Position": 1896, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position": 2092, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 2225, "Velocity": 100, "Current": 200},
+      {"ID": 30, "Position": 1973, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 2124, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 2282, "Velocity": 100, "Current": 200},
+      {"ID": 40, "Position": 1837, "Velocity": 100, "Current": 200},
+      {"ID": 41, "Position": 2758, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 3278, "Velocity": 100, "Current": 200},
+      {"ID": 50, "Position": 1739, "Velocity": 100, "Current": 200},
+      {"ID": 51, "Position": 2045, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 1907, "Velocity": 100, "Current": 200}
+    ],
+
+    "pinch_little": [
+      {"ID": 10, "Position": 2632, "Velocity": 100, "Current": 200},
+      {"ID": 11, "Position": 2001, "Velocity": 100, "Current": 200},
+      {"ID": 12, "Position": 2608, "Velocity": 100, "Current": 200},
+      {"ID": 20, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 21, "Position": 2049, "Velocity": 100, "Current": 200},
+      {"ID": 22, "Position": 2042, "Velocity": 100, "Current": 200},
+      {"ID": 30, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 31, "Position": 2048, "Velocity": 100, "Current": 200},
+      {"ID": 32, "Position": 2054, "Velocity": 100, "Current": 200},
+      {"ID": 40, "Position": 2044, "Velocity": 100, "Current": 200},
+      {"ID": 41, "Position": 2045, "Velocity": 100, "Current": 200},
+      {"ID": 42, "Position": 2079, "Velocity": 100, "Current": 200},
+      {"ID": 50, "Position": 1442, "Velocity": 100, "Current": 200},
+      {"ID": 51, "Position": 1210, "Velocity": 100, "Current": 200},
+      {"ID": 52, "Position": 643, "Velocity": 100, "Current": 200}
+    ],
+    "//comment-specific-motion": "---------------------specific motion---------------------"
+  }
+}

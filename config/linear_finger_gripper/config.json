@@ -1,5 +1,5 @@
 {
-  "gripper_name": "PATROL GRIPPER",
+  "gripper_name": "Linear Finger Gripper",
   "hand": {
     "__comment": "base to tip",
     "num_of_fingers": 4,
@@ -19,7 +19,7 @@
 
   "communication": {
     "__comment": "WINDOWS: COM*, LINUX: /dev/ttyUSB*",
-    "port": "/dev/ttyUSB0",
+    "port": "/dev/linear_finger_gripper",
     "protocol_version": 2.0,
     "baudrate": 1000000
   },
@@ -79,20 +79,20 @@
   },
   "motor_details": {
     "__comment": "Per-motor settings. Add settings for each motor ID.",
-    "10": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1000, "max_position": 15000, "current_limit": 300, "homing_offset": -1450, "drive_mode": "0x00"},
-    "11": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
+    "10": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1000, "max_position": 15000, "current_limit": 300, "homing_offset": -1250, "drive_mode": "0x00"},
+    "11": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": -200, "drive_mode": "0x00"},
     "12": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "13": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "14": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x01"},
     "15": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "16": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
 
-    "20": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1000, "max_position": 15000, "current_limit": 300, "homing_offset": -1400, "drive_mode": "0x00"},
-    "21": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": -213, "drive_mode": "0x00"},
+    "20": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1000, "max_position": 15000, "current_limit": 300, "homing_offset": -2400, "drive_mode": "0x00"},
+    "21": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 200, "drive_mode": "0x00"},
     "22": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "23": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
     "24": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 770, "drive_mode": "0x01"},
-    "25": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": -110, "drive_mode": "0x00"},
+    "25": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": -1110, "drive_mode": "0x00"},
     "26": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1200, "max_position": 2800, "current_limit": 200, "homing_offset": 340, "drive_mode": "0x00"},
 
     "30": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1000, "max_position": 15000, "current_limit": 300, "homing_offset": -1900, "drive_mode": "0x00"},
