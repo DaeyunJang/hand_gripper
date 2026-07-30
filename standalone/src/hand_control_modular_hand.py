@@ -280,6 +280,25 @@ class DynamixelController:
                     if verbose: print(f"Dynamixel#{motor_id} has been set min position to {min_position}")
                     pass
 
+            pid_gain_fields = (
+                ("position_d_gain", "ADDR_POSITION_D"),
+                ("position_i_gain", "ADDR_POSITION_I"),
+                ("position_p_gain", "ADDR_POSITION_P"),
+            )
+            for gain_key, addr_key in pid_gain_fields:
+                if gain_key in details:
+                    pid_gain = details[gain_key]
+                    dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(
+                        self.portHandler, motor_id, control_table[addr_key], pid_gain
+                    )
+                    if dxl_comm_result != COMM_SUCCESS:
+                        print(f"%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+                    elif dxl_error != 0:
+                        print(f"%s" % self.packetHandler.getRxPacketError(dxl_error))
+                    else:
+                        if verbose: print(f"Dynamixel#{motor_id} has been set {gain_key} to {pid_gain}")
+                        pass
+
     def set_baudrate(self, verbose: bool = True):
         """
         Sets the baud rate for all motors and the port handler based on the motor_details in the config file.

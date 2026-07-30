@@ -93,24 +93,24 @@
   },
   "motor_details": {
     "__comment": "Per-motor settings. Add settings for each motor ID.",
-    "10": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": -196, "drive_mode": "0x00"},
-    "11": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": 308, "drive_mode": "0x00"},
-    "12": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": 1567, "drive_mode": "0x00"},
+    "10": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": -196, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "11": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": 308, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "12": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": 1567, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
 
-    "20": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": -243, "drive_mode": "0x00"},
-    "21": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": 410, "drive_mode": "0x00"},
-    "22": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": 613, "drive_mode": "0x00"},
+    "20": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": -243, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "21": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": 410, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "22": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": 613, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
 
-    "30": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": -190, "drive_mode": "0x00"},
-    "31": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": -175, "drive_mode": "0x00"},
-    "32": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": -283, "drive_mode": "0x00"},
+    "30": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": -190, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "31": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": -175, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "32": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": -283, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
 
-    "40": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": 232, "drive_mode": "0x00"},
-    "41": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": 151, "drive_mode": "0x00"},
-    "42": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": -141, "drive_mode": "0x00"},
+    "40": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": 232, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "41": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": 151, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "42": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": -141, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
 
-    "50": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": -16, "drive_mode": "0x00"},
-    "51": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": 0, "drive_mode": "0x00"},
-    "52": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": 68, "drive_mode": "0x00"}
+    "50": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 1536, "max_position": 2560, "current_limit": 200, "homing_offset": -16, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "51": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3072, "current_limit": 200, "homing_offset": 0, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"},
+    "52": { "target_baudrate": 1000000, "return_delay_time": 125, "min_position": 2048, "max_position": 3900, "current_limit": 200, "homing_offset": 68, "position_d_gain": 300, "position_i_gain": 0, "position_p_gain": 1500, "drive_mode": "0x00"}
   }
 }
